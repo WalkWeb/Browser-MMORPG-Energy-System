@@ -1,0 +1,83 @@
+<?php
+
+class EnergyModel
+{
+    /**
+     * @var \mysqli
+     */
+    public $DB;
+
+    /**
+     * Подключение к БД
+     */
+    public function __construct()
+    {
+        $this->DB = mysqli_connect('localhost', 'yii2test', '12345', 'yii2test')
+        or die('Невозможно подключиться к серверу БД.');
+        $this->DB->query('SET NAMES utf8');
+    }
+
+    /**
+     * Возвращает массив  данных пользователя
+     *
+     * @param $id int
+     * @return array
+     */
+    public function getUserInfo($id)
+    {
+        $user = null;
+
+        $queryString = 'SELECT `id`, `uname`, `energy`, `energy_max`, `time`, `residue` 
+                        FROM energy 
+                        WHERE id = ?';
+        if ($stmt = $this->DB->prepare($queryString)) {
+            $stmt->bind_param(
+                "i",
+                $id
+            );
+            $stmt->execute();
+            if (!$stmt->error) {
+                $stmt->bind_result(
+                    $user['id'],
+                    $user['name'],
+                    $user['energy'],
+                    $user['energy_max'],
+                    $user['time'],
+                    $user['residue']
+                );
+                $stmt->fetch();
+            }
+            $stmt->close();
+        }
+
+         return $user;
+    }
+
+    /**
+     * Записывает новое значение энергии и дополнительные параметры
+     *
+     * @param $id int
+     * @param $value int
+     * @param $residue_new string
+     * @param $time float
+     */
+    public function editEnergy($id, $value, $time, $residue_new)
+    {
+        $queryString = 'UPDATE `energy` SET energy = ?, time = ?, residue = ? WHERE id = ?';
+        if ($stmt = $this->DB->prepare($queryString)) {
+            $stmt->bind_param(
+                "issi",
+                $value,
+                $time,
+                $residue_new,
+                $id
+            );
+            $stmt->execute();
+            if ($stmt->error) {
+                echo $stmt->error;
+            }
+            $stmt->close();
+        }
+    }
+}
+
