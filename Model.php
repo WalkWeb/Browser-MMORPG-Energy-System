@@ -58,8 +58,8 @@ class EnergyModel
      *
      * @param $id int
      * @param $value int
+     * @param $time string
      * @param $residue_new string
-     * @param $time float
      */
     public function editEnergy($id, $value, $time, $residue_new)
     {
@@ -80,4 +80,3 @@ class EnergyModel
         }
     }
 }
-

@@ -2,7 +2,7 @@
 
 include('Model.php');
 
-class EnergyNew
+class Energy
 {
     /**
      * ID пользователя
@@ -167,57 +167,86 @@ class EnergyNew
         $content = '
         <html>
         <head>
-            <title>Energy</title>
+            <title>Пример системы регенерации энергии в браузерной MMORPG</title>
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
             <style>
-                .energy_cont { width: 200px; height: 30px; background: #005; }
-                .energy_bar { width: 0; height: 30px; background: #00c; border-radius: 4px; }
-                .energy_text { width: 100%; height: 30px; margin-top: -30px; text-align: center; padding: 3px; color: #fff; font-size: 21px; }
-                .second_cont { width: 200px; height: 5px; background: #600; }
-                .second_bar { width: 40px; height: 5px; background: #a00; border-radius: 2px; }
+                * {margin: 0;padding: 0;}
+                body {background: #2b2b2b;color: #f1f1f1;}
+                .user {width: 250px; background: #3b3b3b; margin: 50px auto 0 auto;}
+                .ava {width: 250px; height: 250px; background: url(img/ava.jpg);}
+                .name {width: 100%; padding: 3px; font-size: 22px; text-align: center;}
+                .energy_cont {width: 100%; height: 20px; background: #005; overflow: hidden;}
+                .energy_bar {height: 20px; background: #00c; border-radius: 3px;}
+                .engtext {width: 100%; height: 20px; font-size: 18px; text-align: center; margin-top: -20px;}
+                button {background-color: #f44336;border: none;color: white;padding: 10px 22px;text-align: center;text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 5px;}
+                button:hover {background-color: #d7382c;  cursor: pointer;}
+                form {float: left;}
+                .formcont {width: 290px; margin: 50px auto 0 auto;}
+                .userinfo {width: 350px; margin: 50px auto; border: 1px solid #444444; padding: 5px; font-family: arial, sans-serif; font-size: 14px;}
+                .w600 {width: 600px;}
+                .second_cont {width: 250px; height: 5px; background: #600;}
+                .second_bar {width: 40px; height: 5px; background: #a00; border-radius: 2px;}
+                .energy_text {width: 250px; text-align: center; font-family: arial, sans-serif; font-size: 14px;}
+                .energy_text p {padding: 4px;}
+                .red {font-size: 17px; text-align: center; padding: 5px; color: #f33;}
             </style>
         </head>
         <body>
-        
-        <p>'.$message.'&nbsp;</p>
-        
-        <p>До получения: <span id="second"></span>/<span id="second_max"></span> сек.</p>
-        
-        <div class="energy_cont">
-            <div id="energy_bar_div" class="energy_bar"></div>
-            <div class="energy_text">
+        <div class="user">
+            <div class="ava"></div>
+            <div class="name">Пользователь: Andariel</div>
+            <div class="energy_cont">
+                <div id="energy_bar_div" class="energy_bar"></div>
+            </div>
+            <div class="engtext">
                 <span id="energy"></span>/<span id="energy_max"></span>
             </div>
+            <div class="second_cont">
+                <div id="second_bar_div" class="second_bar"></div>
+            </div>
+            <div class="energy_text">
+                <p>До получения: <span id="second"></span>/<span id="second_max"></span> сек.</p>
+            </div>
         </div>
-        <div class="second_cont">
-            <div id="second_bar_div" class="second_bar"></div>
-        </div>
-    
-        <p>
-        <i>Примечание: Параметры ниже не изменяются динамически. Подразумевается, что на сайте будет использоваться только 
-        то, что выше. А информация ниже &#151; это отладочная информация для разработчика.</i><br />
-        ID: '.$this->user['id'].'<br />
-        Имя: '.$this->user['name'].'<br />
-        Энергии: '.$this->user['energy'].'<br />
-        Максимум энергии: '.$this->user['energy_max'].'<br />
-        Длина полоски энергии: '.$this->user['eweight'].'%<br />
-        Время последнего. обновления: '.$this->user['time'].'<br />
-        Остаток (сек.): '.$this->user['residue'].'<br /><br />
+        <div class="userinfo w600">
+            <p class="red">'.$message.'</p>
         
-        Текущее время: '.$this->user['time_actual'].'<br />
-        Энергия полная? '.$fullMessage.'
-        </p>';
+            Дополнительная информация ниже не обновляется динамически. Подразумевается, что на сайте будет использоваться только то,
+            что отображается выше. А ниже &#151; это отладочная информация для разработчика.
+        </div>
+        <div class="userinfo">
+            <p>
+                ID: '.$this->user['id'].'<br />
+                Имя: '.$this->user['name'].'<br />
+                Энергии: '.$this->user['energy'].'<br />
+                Максимум энергии: '.$this->user['energy_max'].'<br />
+                Длина полоски энергии: '.$this->user['eweight'].'%<br />
+                Время последнего. обновления: '.$this->user['time'].'<br />
+                Остаток (сек.): '.$this->user['residue'].'<br /><br />
+        
+                Текущее время: '.$this->user['time_actual'].'<br />
+                Энергия полная? '.$fullMessage.'<br /><br />';
 
-        if (!$this->user['efull']) {
-            $content .=    '<p>
-                                Разница времени: '.$this->user['difference'].'<br />
-                                Количество добавляемой энергии: '.$this->user['addenergy'].'<br />
-                                Новый остаток (сек.): '.$this->user['residue_new'].'<br />
-                            </p>';
-        }
+                if (!$this->user['efull']) {
+                    $content .=    'Разница времени: '.$this->user['difference'].'<br />
+                                    Количество добавляемой энергии: '.$this->user['addenergy'].'<br />
+                                    Новый остаток (сек.): '.$this->user['residue_new'].'<br />';
+                }
 
-        $content .= '<form method="POST" action=""><input type="hidden" name="energy" value="meanEnergyDecrease"><button class="input_submit">-30 энергии</button></form>
-                     <form method="POST" action=""><input type="hidden" name="energy" value="meanEnergyIncrease"><button class="input_submit">+30 энергии</button></form>
-    
+        $content .= '</p>
+        </div>
+        
+        <div class="formcont">
+            <form method="post" action="">
+                <input type="hidden" name="energy" value="meanEnergyDecrease">
+                <button>-30 энергии</button>
+            </form>
+            <form method="post" action="">
+                <input type="hidden" name="energy" value="meanEnergyIncrease">
+                <button>+30 энергии</button>
+            </form>
+        </div>
+        
         <script>
             var interval = 1000; // Время одной секунды (код подразумевает, что это будут секунды, хотя это может быть и другая величина)
             var expected = Date.now() + interval;
@@ -229,10 +258,12 @@ class EnergyNew
             var energy_bar;        // Размер полоски энергии
             var second_bar;        // Размер полоски секунд
         
+            // Таймер
             function timer() {
                 setTimeout(step, interval);
             }
             
+            // Каждую секунду увеличивает параметр секунды, энергии (если нужно)
             function step() {
                 var dt = Date.now() - expected;
                 if (dt > interval) {
@@ -254,6 +285,7 @@ class EnergyNew
                 }
             }
         
+            // Обновляет значения энергии и длину полосок энергии
             function view() {
                 document.getElementById(\'second\').innerHTML = second;
                 document.getElementById(\'energy\').innerHTML = energy;
@@ -265,6 +297,7 @@ class EnergyNew
                 document.getElementById(\'second_bar_div\').style.width = second_bar + \'%\';
             }
         
+            // При загрузке задаем стартовые параметры и запускаем таймер
             window.onload = function(){
                 document.getElementById(\'energy\').innerHTML = energy;
                 document.getElementById(\'energy_max\').innerHTML = energy_max;
@@ -287,7 +320,7 @@ class EnergyNew
     }
 }
 
-$page = new EnergyNew();
+$page = new Energy();
 $result = null;
 
 if ($_POST) {
