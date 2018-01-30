@@ -114,7 +114,7 @@ class Energy
 
             // Проверяем, не является ли энергия уже максимальной
             if ($this->user['energy'] === $this->user['energy_max']) {
-                return ['sucsess' => 0, 'message' => 'Энергия уже максимальна'];
+                return array('sucsess' => 0, 'message' => 'Энергия уже максимальна');
             }
 
             // Увеличиваем текущую энергию
@@ -131,7 +131,7 @@ class Energy
             // Записываем данные в БД
             $this->db->editEnergy($this->id, $this->user['energy'], $this->user['time_actual'], $this->user['residue_new']);
 
-            return ['sucsess' => 1, 'message' => 'Увеличение энергии успешно'];
+            return array('sucsess' => 1, 'message' => 'Увеличение энергии успешно');
 
         } elseif ($value < 0) {
 
@@ -145,13 +145,13 @@ class Energy
                 // Записываем данные в БД
                 $this->db->editEnergy($this->id, $this->user['energy'], $this->user['time_actual'], $this->user['residue_new']);
 
-                return ['sucsess' => 1, 'message' => 'Уменьшение энергии успешно'];
+                return array('sucsess' => 1, 'message' => 'Уменьшение энергии успешно');
             } else {
-                return ['sucsess' => 0, 'message' => 'У вас недостаточно энергии'];
+                return array('sucsess' => 0, 'message' => 'У вас недостаточно энергии');
             }
         }
 
-        return ['sucsess' => 0, 'message' => 'Ошибка: данная ситуация не должна была произойти (вероятно вы отправили изменение энергии на 0)'];
+        return array('sucsess' => 0, 'message' => 'Ошибка: данная ситуация не должна была произойти (вероятно вы отправили изменение энергии на 0)');
     }
 
     /**
@@ -194,25 +194,25 @@ class Energy
         <body>
         <div class="user">
             <div class="ava"></div>
-            <div class="name">Пользователь: Andariel</div>
+            <div class="name">Пользователь: '.$this->user['name'].'</div>
             <div class="energy_cont">
-                <div id="energy_bar_div" class="energy_bar"></div>
+                <div id="energy_bar_div" class="energy_bar" style="width: '.$this->user['eweight'].'%"></div>
             </div>
             <div class="engtext">
-                <span id="energy"></span>/<span id="energy_max"></span>
+                <span id="energy">'.$this->user['energy'].'</span>/<span id="energy_max">'.$this->user['energy_max'].'</span>
             </div>
             <div class="second_cont">
                 <div id="second_bar_div" class="second_bar"></div>
             </div>
             <div class="energy_text">
-                <p>До получения: <span id="second"></span>/<span id="second_max"></span> сек.</p>
+                <p>До получения: <span id="second">'.$this->user['residue_new'].'</span>/<span id="second_max">'.$this->cost.'</span> сек.</p>
             </div>
         </div>
         <div class="userinfo w600">
             <p class="red">'.$message.'</p>
         
-            Дополнительная информация ниже не обновляется динамически. Подразумевается, что на сайте будет использоваться только то,
-            что отображается выше. А ниже &#151; это отладочная информация для разработчика.
+            <p>Дополнительная информация ниже не обновляется динамически. Подразумевается, что на сайте будет использоваться только то,
+            что отображается выше. А ниже &#151; это отладочная информация для разработчика.</p>
         </div>
         <div class="userinfo">
             <p>
@@ -267,7 +267,9 @@ class Energy
             function step() {
                 var dt = Date.now() - expected;
                 if (dt > interval) {
-                    alert(\'Непредвиденная ошибка\');
+                    // Если компьютер перевести в спящий режим, то после выхода сработает данное условие. И, разумеется, 
+                    // таймер во время сна работать не будет. Если вам нужно идеальное отображение корректной информации 
+                    // без обновления страницы - здесь надо добавить ajax запрос на обноваление информации
                 } else {
                     if (energy < energy_max) {
                         second++;
