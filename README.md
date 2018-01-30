@@ -1,4 +1,4 @@
-DEMO: walkweb.ru/energy/
+DEMO: http://walkweb.ru/energy/
 
 Описание: #позже#
 
