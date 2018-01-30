@@ -169,27 +169,7 @@ class Energy
         <head>
             <title>Пример системы регенерации энергии в браузерной MMORPG</title>
             <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-            <style>
-                * {margin: 0;padding: 0;}
-                body {background: #2b2b2b;color: #f1f1f1;}
-                .user {width: 250px; background: #3b3b3b; margin: 50px auto 0 auto;}
-                .ava {width: 250px; height: 250px; background: url(img/ava.jpg);}
-                .name {width: 100%; padding: 3px; font-size: 22px; text-align: center;}
-                .energy_cont {width: 100%; height: 20px; background: #005; overflow: hidden;}
-                .energy_bar {height: 20px; background: #00c; border-radius: 3px;}
-                .engtext {width: 100%; height: 20px; font-size: 18px; text-align: center; margin-top: -20px;}
-                button {background-color: #f44336;border: none;color: white;padding: 10px 22px;text-align: center;text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 5px;}
-                button:hover {background-color: #d7382c;  cursor: pointer;}
-                form {float: left;}
-                .formcont {width: 290px; margin: 50px auto 0 auto;}
-                .userinfo {width: 350px; margin: 50px auto; border: 1px solid #444444; padding: 5px; font-family: arial, sans-serif; font-size: 14px;}
-                .w600 {width: 600px;}
-                .second_cont {width: 250px; height: 5px; background: #600;}
-                .second_bar {width: 40px; height: 5px; background: #a00; border-radius: 2px;}
-                .energy_text {width: 250px; text-align: center; font-family: arial, sans-serif; font-size: 14px;}
-                .energy_text p {padding: 4px;}
-                .red {font-size: 17px; text-align: center; padding: 5px; color: #f33;}
-            </style>
+            <link href="css/style.css" rel="stylesheet">
         </head>
         <body>
         <div class="user">
@@ -248,73 +228,17 @@ class Energy
         </div>
         
         <script>
+            // Подготавливаем параметры для таймера
             var interval = 1000; // Время одной секунды (код подразумевает, что это будут секунды, хотя это может быть и другая величина)
             var expected = Date.now() + interval;
-            
             var energy = '.$this->user['energy'].'; // Текущее количество энергии
             var energy_max = '.$this->user['energy_max'].'; // Максимальное количество энергии
             var second = '.$this->user['residue_new'].'; // Текущее количество секунд
             var second_max = '.$this->cost.'; // Требуемое количество секунд для получения 1 энергии
             var energy_bar;        // Размер полоски энергии
             var second_bar;        // Размер полоски секунд
-        
-            // Таймер
-            function timer() {
-                setTimeout(step, interval);
-            }
-            
-            // Каждую секунду увеличивает параметр секунды, энергии (если нужно)
-            function step() {
-                var dt = Date.now() - expected;
-                if (dt > interval) {
-                    // Если компьютер перевести в спящий режим, то после выхода сработает данное условие. И, разумеется, 
-                    // таймер во время сна работать не будет. Если вам нужно идеальное отображение корректной информации 
-                    // без обновления страницы - здесь надо добавить ajax запрос на обноваление информации
-                } else {
-                    if (energy < energy_max) {
-                        second++;
-    
-                        if (second === second_max) {
-                            second = 0;
-                            energy++;
-                        }
-    
-                        view();
-            
-                        expected += interval;
-                        setTimeout(step, Math.max(0, interval - dt));
-                    }
-                }
-            }
-        
-            // Обновляет значения энергии и длину полосок энергии
-            function view() {
-                document.getElementById(\'second\').innerHTML = second;
-                document.getElementById(\'energy\').innerHTML = energy;
-        
-                energy_bar = Math.round((energy/energy_max) * 100);
-                document.getElementById(\'energy_bar_div\').style.width = energy_bar + \'%\';
-        
-                second_bar = Math.round((second/second_max) * 100);
-                document.getElementById(\'second_bar_div\').style.width = second_bar + \'%\';
-            }
-        
-            // При загрузке задаем стартовые параметры и запускаем таймер
-            window.onload = function(){
-                document.getElementById(\'energy\').innerHTML = energy;
-                document.getElementById(\'energy_max\').innerHTML = energy_max;
-                document.getElementById(\'second\').innerHTML = second;
-                document.getElementById(\'second_max\').innerHTML = second_max;
-        
-                energy_bar = Math.round((energy/energy_max) * 100);
-                document.getElementById(\'energy_bar_div\').style.width = energy_bar + \'%\';
-        
-                second_bar = Math.round((second/second_max) * 100);
-                document.getElementById(\'second_bar_div\').style.width = second_bar + \'%\';
-        
-                timer();
-            };
         </script>
+        <script src="js/energy.js"></script>
         </body>
         </html>';
 

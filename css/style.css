@@ -1,0 +1,19 @@
+* {margin: 0;padding: 0;}
+body {background: #2b2b2b;color: #f1f1f1;}
+.user {width: 250px; background: #3b3b3b; margin: 50px auto 0 auto;}
+.ava {width: 250px; height: 250px; background: url(../img/ava.jpg);}
+.name {width: 100%; padding: 3px; font-size: 22px; text-align: center;}
+.energy_cont {width: 100%; height: 20px; background: #005; overflow: hidden;}
+.energy_bar {height: 20px; background: #00c; border-radius: 3px;}
+.engtext {width: 100%; height: 20px; font-size: 18px; text-align: center; margin-top: -20px;}
+button {background-color: #f44336;border: none;color: white;padding: 10px 22px;text-align: center;text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 5px;}
+button:hover {background-color: #d7382c;  cursor: pointer;}
+form {float: left;}
+.formcont {width: 290px; margin: 50px auto 0 auto;}
+.userinfo {width: 350px; margin: 50px auto; border: 1px solid #444444; padding: 5px; font-family: arial, sans-serif; font-size: 14px;}
+.w600 {width: 600px;}
+.second_cont {width: 250px; height: 5px; background: #600;}
+.second_bar {width: 40px; height: 5px; background: #a00; border-radius: 2px;}
+.energy_text {width: 250px; text-align: center; font-family: arial, sans-serif; font-size: 14px;}
+.energy_text p {padding: 4px;}
+.red {font-size: 17px; text-align: center; padding: 5px; color: #f33;}
