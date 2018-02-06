@@ -21,13 +21,14 @@ class Energy
      * 5) time (float) - время последнего обновления энергии
      * 6) residue (int) - остаток времени в секундах
      * 7) eweight (int) - длина полоски энергии
-     * 8) time_actual (float) - текущее время
-     * 9) efull (boolean) - полное ли количество энергии у пользователя
-     * 10) difference (int) - разница, между временем последнего обновления энергии и текущего времени (если энергия
+     * 8) sweight (int) - длина полоски секунд
+     * 9) time_actual (float) - текущее время
+     * 10) efull (boolean) - полное ли количество энергии у пользователя
+     * 11) difference (int) - разница, между временем последнего обновления энергии и текущего времени (если энергия
      *     максимальна - приравниваем данный параметр к нулю)
-     * 11) addenergy - количество энергии, которую можно добавить (если энергия максимальна - приравниваем данный
+     * 12) addenergy - количество энергии, которую можно добавить (если энергия максимальна - приравниваем данный
      *     параметр к нулю)
-     * 12) residue_new - новый остаток времени в секундах (секунд). Этот параметр нужен для более точного рассчета
+     * 13) residue_new - новый остаток времени в секундах (секунд). Этот параметр нужен для более точного рассчета
      *     энергии (если энергия максимальна - приравниваем данный параметр к нулю)
      *
      * @var array
@@ -81,6 +82,7 @@ class Energy
         }
 
         $this->user['eweight'] = round(($this->user['energy']/$this->user['energy_max']*100));
+
         $this->user['time_actual'] = microtime(true);
         $this->user['efull'] = ($this->user['energy'] === $this->user['energy_max']) ? true : false;
 
@@ -88,10 +90,12 @@ class Energy
             $this->user['difference'] = ($this->user['time_actual'] - $this->user['time']) + $this->user['residue'];
             $this->user['addenergy'] = floor($this->user['difference']/$this->cost);
             $this->user['residue_new'] = floor($this->user['difference'] - ($this->user['addenergy'] * $this->cost));
+            $this->user['sweight'] = round(($this->user['residue_new']/$this->cost*100));
         } else {
             $this->user['difference'] = 0;
             $this->user['addenergy'] = 0;
             $this->user['residue_new'] = 0;
+            $this->user['sweight'] = 0;
         }
 
         // Если количество добавляемой энергии больше 1 - обновляем данные в БД
@@ -182,7 +186,7 @@ class Energy
                 <span id="energy">'.$this->user['energy'].'</span>/<span id="energy_max">'.$this->user['energy_max'].'</span>
             </div>
             <div class="second_cont">
-                <div id="second_bar_div" class="second_bar"></div>
+                <div id="second_bar_div" class="second_bar" style="width: '.$this->user['sweight'].'%"></div>
             </div>
             <div class="energy_text">
                 <p>До получения: <span id="second">'.$this->user['residue_new'].'</span>/<span id="second_max">'.$this->cost.'</span> сек.</p>

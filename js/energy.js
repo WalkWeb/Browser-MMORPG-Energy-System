@@ -40,18 +40,5 @@ function view() {
     document.getElementById('second_bar_div').style.width = second_bar + '%';
 }
 
-// При загрузке задаем стартовые параметры и запускаем таймер
-window.onload = function(){
-    document.getElementById('energy').innerHTML = energy;
-    document.getElementById('energy_max').innerHTML = energy_max;
-    document.getElementById('second').innerHTML = second;
-    document.getElementById('second_max').innerHTML = second_max;
-
-    energy_bar = Math.round((energy/energy_max) * 100);
-    document.getElementById('energy_bar_div').style.width = energy_bar + '%';
-
-    second_bar = Math.round((second/second_max) * 100);
-    document.getElementById('second_bar_div').style.width = second_bar + '%';
-
-    timer();
-};
+// При загрузке страницы запускаем таймер
+document.addEventListener("DOMContentLoaded", timer);

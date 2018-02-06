@@ -13,7 +13,7 @@ form {float: left;}
 .userinfo {width: 350px; margin: 50px auto; border: 1px solid #444444; padding: 5px; font-family: arial, sans-serif; font-size: 14px;}
 .w600 {width: 600px;}
 .second_cont {width: 250px; height: 5px; background: #600;}
-.second_bar {width: 40px; height: 5px; background: #a00; border-radius: 2px;}
+.second_bar {height: 5px; background: #a00; border-radius: 2px;}
 .energy_text {width: 250px; text-align: center; font-family: arial, sans-serif; font-size: 14px;}
 .energy_text p {padding: 4px;}
 .red {font-size: 17px; text-align: center; padding: 5px; color: #f33;}
