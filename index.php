@@ -50,7 +50,7 @@ class Energy
     private $db;
 
     /**
-     * Подключаемся к БД, делаем запрос на получение данных о пользователе, а также рассчитываем дополнительные параметры
+     * Подключаемся к БД, делаем запрос на получение данных о пользователе, а также рассчитываем дополнительные параметры пользователя
      */
     public function __construct()
     {
@@ -72,7 +72,7 @@ class Energy
      *
      * @param $update bool
      */
-    private function getAddUserInfo($update)
+    private function getAddUserInfo($update = true)
     {
         // Если у нас произошло обновление энергии, то базовое время и остаток секунд изменилось.
         // Мы можем обновить эти параметры дополнительным запросом в БД, а можем не делать лишний запрос и обновить вручную
@@ -130,7 +130,7 @@ class Energy
             }
 
             // Энергия изменилась, значит нужно повторно рассчитать дополнительные параметры
-            $this->getAddUserInfo(true);
+            $this->getAddUserInfo();
 
             // Записываем данные в БД
             $this->db->editEnergy($this->id, $this->user['energy'], $this->user['time_actual'], $this->user['residue_new']);
@@ -144,7 +144,7 @@ class Energy
                 $this->user['energy'] = $this->user['energy'] + $value;
 
                 // Энергия изменилась, значит нужно повторно рассчитать дополнительные параметры
-                $this->getAddUserInfo(true);
+                $this->getAddUserInfo();
 
                 // Записываем данные в БД
                 $this->db->editEnergy($this->id, $this->user['energy'], $this->user['time_actual'], $this->user['residue_new']);
@@ -200,24 +200,17 @@ class Energy
         </div>
         <div class="userinfo">
             <p>
-                ID: '.$this->user['id'].'<br />
                 Имя: '.$this->user['name'].'<br />
                 Энергии: '.$this->user['energy'].'<br />
                 Максимум энергии: '.$this->user['energy_max'].'<br />
                 Длина полоски энергии: '.$this->user['eweight'].'%<br />
+                Длина полоски секунд: '.$this->user['sweight'].'%<br />
                 Время последнего. обновления: '.$this->user['time'].'<br />
                 Остаток (сек.): '.$this->user['residue'].'<br /><br />
         
                 Текущее время: '.$this->user['time_actual'].'<br />
-                Энергия полная? '.$fullMessage.'<br /><br />';
-
-                if (!$this->user['efull']) {
-                    $content .=    'Разница времени: '.$this->user['difference'].'<br />
-                                    Количество добавляемой энергии: '.$this->user['addenergy'].'<br />
-                                    Новый остаток (сек.): '.$this->user['residue_new'].'<br />';
-                }
-
-        $content .= '</p>
+                Энергия полная? '.$fullMessage.
+            '</p>
         </div>
         
         <div class="formcont">
