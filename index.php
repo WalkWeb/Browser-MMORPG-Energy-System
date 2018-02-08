@@ -124,8 +124,8 @@ class Energy
             // Увеличиваем текущую энергию
             $this->user['energy'] = $this->user['energy'] + $value;
 
-            // Проверяем, не стала ли энергия больше или равна максимальной, в этом случае приравниваем её к максимальной
-            if ($this->user['energy'] >= $this->user['energy_max']) {
+            // Проверяем, не стала ли энергия больше максимальной, в этом случае приравниваем её к максимальной
+            if ($this->user['energy'] > $this->user['energy_max']) {
                 $this->user['energy'] = $this->user['energy_max'];
             }
 
