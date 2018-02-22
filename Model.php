@@ -9,10 +9,12 @@ class EnergyModel
 
     /**
      * Подключение к БД
+     *
+     * Не забудьте указать свои данные для подключения к MySQL!
      */
     public function __construct()
     {
-        $this->DB = mysqli_connect('localhost', 'yii2test', '12345', 'yii2test')
+        $this->DB = mysqli_connect('localhost', 'db_user', 'db_password', 'db_name')
         or die('Невозможно подключиться к серверу БД.');
         $this->DB->query('SET NAMES utf8');
     }
