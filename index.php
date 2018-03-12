@@ -255,8 +255,7 @@ if ($_POST) {
     } elseif ($_POST['energy'] === 'meanEnergyIncrease') {
         $result = $page->editEnergy(30);
     } else {
-        $result['sucsess'] = 0;
-        $result['message'] = 'Вы отправили неверные POST-данные';
+        $result = array('sucsess' => 0, 'message' => 'Вы отправили неверные POST-данные');
     }
 }
 
