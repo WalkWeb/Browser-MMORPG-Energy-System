@@ -208,12 +208,12 @@ class Energy
                 Максимум энергии: '.$this->user['energy_max'].'<br />
                 Длина полоски энергии: '.$this->user['eweight'].'%<br />
                 Длина полоски секунд: '.$this->user['sweight'].'%<br />
-                Время последнего. обновления: '.$this->user['time'].'<br />
+                Время последнего обновления: '.$this->user['time'].'<br />
                 Остаток (сек.): '.$this->user['residue'].'<br /><br />
         
                 Текущее время: '.$this->user['time_actual'].'<br />
-                Энергия полная? '.$fullMessage.
-            '</p>
+                Энергия полная? '.$fullMessage.'
+            </p>
         </div>
         
         <div class="formcont">
